@@ -1,23 +1,21 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, connectAuthEmulator } from "firebase/auth";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics"
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBnTj3zQlqiJ1jmnLwo761E0-tZPRNi0IE",
-  authDomain: "do-an-cnpm-3d2a0.firebaseapp.com",
-  projectId: "do-an-cnpm-3d2a0",
-  storageBucket: "do-an-cnpm-3d2a0.appspot.com",
-  messagingSenderId: "420640745819",
-  appId: "1:420640745819:web:b4cb8cd0af9ce149e8d27e",
-  measurementId: "G-820Y9G1R37"
-};
+  apiKey: "AIzaSyB1s-ZwwTq_tiuayeQuSisrOFNEnRRnVYk",
+  authDomain: "delta-plus-a87fb.firebaseapp.com",
+  projectId: "delta-plus-a87fb",
+  storageBucket: "delta-plus-a87fb.appspot.com",
+  messagingSenderId: "334412676552",
+  appId: "1:334412676552:web:d022714035f11f1fe214fd",
+  measurementId: "G-6Z8YPSZ76H",
+}
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
-
-// const auth = getAuth();
-// connectAuthEmulator(auth, "http://localhost:9099");
-
-// const db = getFirestore();
-// connectFirestoreEmulator(db, 'localhost', 8080);
+const app = initializeApp(firebaseConfig)
+const analytics = getAnalytics(app)
