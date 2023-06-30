@@ -1,15 +1,52 @@
 # Project Management web-app
  
 ## About
-- To create and manage tasks in multiple workspaces.
-- Can be used for one's tasks or team's projects.
+- Can be used for personal tasks or collaborate project.
+- To create and manage tasks in multiple workspaces (teams).
 - Inspired by Notion board and Trello.
-- [Link Deploy](https://thanhdatdelta.herokuapp.com/)
+- [Link Deploy](https://thanhdatdelta.herokuapp.com/)(the old version)
+> **Important:**
+> I'm making the old version --> into my personal portfolio, 
+> with [more features](#feature-request) and [more improvements]([#What-can-be-improved?])
+> try out the new version here ...
  
-## Development
+## Technologies
 - Frontend: `NodeJS` `Ant-Design` `Bootstrap`
 - Backend: `Native-JS` `Firebase` (*Firestore* and *Authentication*)
  
+## feature-request
+- [ ] add change-log workspace
+  - available to everyone
+  - read-only, but
+  - editable by admin account (nguyenhuuphuc.cse@gmail.com)
+  - anyone can leave comment or feature-request !?
+- [ ] history feature: 
+  - save events related to task. these include:
+  - column changed (e.g. TODO -> In Progress)
+  - assignee changed
+  - use in combination with comment, date-created
+- [ ] categorize task using tag (badge) 
+- [ ] export csv
+- [ ] markdown description feature
+- [ ] chat feature
+- [ ] login with username + password feature 
+- [ ] backup data !?
+- [ ] attach image feature !?
+
+## What can be improved?
+- [ ] Some quick fix to improve UI
+  - autofocus text-input and submit-button
+  - autofocus when open modal
+- [ ] search in vietnamese not working (e.g "Phúc" did not work while "Phuc" work well)
+- [ ] exception when online user deleted from their workspace
+- [ ] make these name unique: workspace, column
+- [ ] assignee field should be optional (not required)
+- [ ] I have no idea who is the workspace's admin
+- [ ] I accidentally delete my workspace :(
+- [ ] save user's journey on reload
+- [ ] show toast on success
+- [ ] drag & drop
+
 ## Useful Scripts
  
 After you've got the codebase, you may need to install the app's dependencies:
@@ -38,8 +75,3 @@ Your app is ready to be deployed!
  
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
  
-### What can be improved?
-- Enhance the UI by adding drag & drop to move a task between columns.
-- Make the navbar and top bar fit into screen size.
-- More on user's permissions logic. What they can do and cannot.
-
