@@ -4,14 +4,21 @@ import { GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
 import logo from './logoDelta.png';
 import './index.scss';
 import { facebookLoginHandler, googleLoginHandler, passwordLoginHandler } from "../../services/auth"
+import { useHistory, useLocation } from 'react-router-dom';
 
 
-export default function Login({ onSuccess = () => { } }) {
+export default function Login() {
+  let location = useLocation()
+  let history = useHistory()
+  let { from } = location.state || { from: "/" }
+  const onSuccess = () => history.replace(from)
+
   const alertError = (any) => {
     console.error(any)
     if (typeof any == "string") alert(any)
     else alert("Không thể đăng nhập. Vui lòng đăng nhập bằng phương thức khác.")
   }
+
   return (
     <div className="wrapper">
       <div className="login-wrapper">
@@ -36,15 +43,7 @@ export default function Login({ onSuccess = () => { } }) {
               color: 'white',
               fontSize: '16px'
             }}
-            // onClick={() => googleLoginHandler().catch(alertError)}
-            onClick={async () => {
-              try {
-                await googleLoginHandler()
-                onSuccess && onSuccess()
-              } catch (e) {
-                alertError(e)
-              }
-            }}
+            onClick={() => googleLoginHandler().then(onSuccess).catch(alertError)}
           >
             <GoogleOutlined style={{ fontSize: '18px' }} />Đăng nhập bằng Google
           </Button>
@@ -60,7 +59,7 @@ export default function Login({ onSuccess = () => { } }) {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={() => facebookLoginHandler().catch(alertError)}
+            onClick={() => facebookLoginHandler().then(onSuccess).catch(alertError)}
           >
             <FacebookOutlined style={{ fontSize: '18px' }} />Đăng nhập bằng Facebook
           </Button>
@@ -76,7 +75,7 @@ export default function Login({ onSuccess = () => { } }) {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={() => passwordLoginHandler().catch(alertError)}
+            onClick={() => passwordLoginHandler().then(onSuccess).catch(alertError)}
           >
             Phương thức khác
           </Button>

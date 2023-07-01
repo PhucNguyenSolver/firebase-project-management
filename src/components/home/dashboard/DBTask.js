@@ -5,21 +5,35 @@ import { AppContext } from '../../../context/AppProvider';
 import { ViewContext, Field } from '../../../context/ViewProvider';
 import { useContext } from 'react';
 
-const ColorPallete = ['6px solid green', '6px solid orange' , '6px solid red'];
+function priorityToColor(priority) {
+  const ColorPallete = ['6px solid green', '6px solid orange', '6px solid red', ''];
+  switch (priority) {
+    case 'Low': return ColorPallete[0]
+    case 'Medium': return ColorPallete[1]
+    case 'High': return ColorPallete[2]
+    default: return ''
+  }
+}
 
 export default function DBTask(props) {
   const {isFieldVisible} = useContext(ViewContext);
-  const { DBmemberList, curDBTask, setDBTask, setVisibleDBTask } = React.useContext(AppContext);
+  const { DBmemberList, setDBTask, setVisibleDBTask } = React.useContext(AppContext);
+  const members = DBmemberList.filter((member) => props.memberIdList.includes(member.uid))
+
+  let borderRight = isFieldVisible(Field.PRIORITY) ? priorityToColor(props.priority) : '' 
   return (
     <div className="task-card-container">
       <Card
         hoverable
         bordered={true}
-        style={{ cursor: 'pointer', borderRadius: '5px',
-        borderRight: (!isFieldVisible(Field.PRIORITY)) ? '' : props.priority === 'Low' ? ColorPallete[0] : ( props.priority === 'Medium' ? ColorPallete[1] : ColorPallete[2])  }}
+        style={{
+          cursor: 'pointer',
+          borderRadius: '5px',
+          borderRight: borderRight
+        }}
         bodyStyle={{ padding: '4%', minheight: '150px'}}
-        onClick= {async () => {
-          await setDBTask({ ...props.task });
+        onClick={() => {
+          setDBTask({ ...props.task });
           setVisibleDBTask(true);
         }}
       >
@@ -27,12 +41,11 @@ export default function DBTask(props) {
           <p className="title">{props.name}</p>
           {(isFieldVisible(Field.MEMBER)) && 
           <Avatar.Group style={{ marginLeft: 'auto', marginRight: 0 }}>
-            {DBmemberList.map((member) => {
-              if (props.memberIdList.includes(member.uid))
-                return (
+              {
+                members.map((member) => (
                   <Avatar key={member.uid} src={member.avaURL} />
-                )
-            })}
+                ))
+              }
           </Avatar.Group>
           }
         </div>
@@ -59,7 +72,13 @@ export default function DBTask(props) {
         <div style={{ marginTop: '0px', float: 'right'  }}>
           {props.tags.map((T, idx) => {
             return(
-              <Tag style={{ fontFamily: 'arial', fontWeight: 'bold', fontSize: '14px' }}>{T.length > 7 ? T.slice(0, 7) + '...' : T}</Tag>
+              <Tag style={{
+                fontFamily: 'arial',
+                fontWeight: 'bold',
+                fontSize: '14px'
+              }}>
+                {T.length > 7 ? T.slice(0, 7) + '...' : T}
+              </Tag>
             )
           })}
         </div>

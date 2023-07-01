@@ -3,15 +3,15 @@ import './listtask.scss';
 import { Row, Col } from 'antd';
 
 export default function ListTasks(props) {
+    const { id, name, list } = props
+    const tasks = list.filter((task) => task.workspace === id)
     return (
         <div>
             <div className="list-task-contain">
-                <div className="list-title">{props.name}</div>
+                <div className="list-title">{name}</div>
                 <div className="tasks-contain">
                     <Row gutter={[16, 8]}>
-                    {props.list.map((task) => {
-                        if (task.workspace === props.id)
-                        return (
+                        {tasks.map((task) => (
                             <Col key={task.id} span={6} className="gutter-row">
                                 <DBTask 
                                     key={task.id} 
@@ -24,9 +24,8 @@ export default function ListTasks(props) {
                                     tags={task.tag}
                                     memberIdList={task.memberIdList}
                                 />
-                            </Col>
-                        )
-                    })}
+                            </Col>)
+                        )}
                     </Row>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Checkbox, Typography, Avatar, Tooltip } from 'antd';
 import "./dashboard.scss";
 import { AuthContext } from '../../../context/AuthProvider';
@@ -6,20 +6,14 @@ import "../../main/task.scss";
 import { Field, ViewContext } from "../../../context/ViewProvider";
 import { AppContext } from '../../../context/AppProvider';
 import ListTask from './ListTasks';
-import { useEffect } from 'react';
 import ViewDBTask from './ViewDBTask';
 
 const { Title } = Typography;
 
 export default function Dashboard() {
-  const { user } = React.useContext(AuthContext);
-  const { DBmemberList, dashboardTask, workspaceList, visibleDBTask } = useContext(AppContext);
+  const { user } = useContext(AuthContext);
+  const { dashboardTask, workspaceList, visibleDBTask } = useContext(AppContext);
 
-  // useEffect(() => {
-  //   console.log(dashboardTask);
-  // }, [dashboardTask]);
-
-  // Checklist
   const { setFieldVisible, isFieldVisible } = useContext(ViewContext);
   const selectedFields = [
     { id: Field.PRIORITY, name: "Priority" },

@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input, Col, Row, Modal } from 'antd';
-import { Menu, Tag } from 'antd';
+import { Tag } from 'antd';
 import './task.scss';
 import { AppContext } from '../../../context/AppProvider';
-
-const dateFormat = 'DD/MM/YYYY';
 
 // Data got from DB
 
@@ -42,20 +40,12 @@ export default function ViewDBTask() {
     const desc = curDBTask.description;
 
 
-    const p = (
-        <Menu>
-            <Menu.Item key="Low">Low</Menu.Item>
-            <Menu.Item key="Medium">Medium</Menu.Item>
-            <Menu.Item key="High">High</Menu.Item>
-        </Menu>
-    );
-
     function convertIDtoName(uid) {
         return DBmemberList.find(o => o.uid === uid)?.name;
     }
 
-    async function closeModal() {
-        await setVisibleDBTask(false);
+    function closeModal() {
+        setVisibleDBTask(false);
     }
 
     return (

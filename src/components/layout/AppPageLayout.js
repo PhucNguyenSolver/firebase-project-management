@@ -2,20 +2,21 @@ import { styled } from 'styled-components';
 
 const AppPageLayout = ({ left, right }) => {
   const Drawer = styled.div`
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   height: 100vh;
   `
 
   const Column1 = styled.div`
   flex: 1;
+  padding: 10px;
   background-color: gray;
   `
 
   const Column2 = styled.div`
-  padding-left: 10px;
-  flex: 10;
-  /* background-color: white; */
+  flex: 1;
+  padding: 10px;
+  background-color: white;
   `
 
   return (

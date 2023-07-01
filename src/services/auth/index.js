@@ -17,7 +17,7 @@ const getLoginHandler = (authProvider) => {
         createdAt: serverTimestamp(),
         keywords: generateKeywords(data.user.displayName?.toLowerCase()),
       }
-      addDocument("person", userInfo)
+      await addDocument("person", userInfo)
     }
   }
   return loginHandler
