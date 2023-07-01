@@ -7,6 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: scroll;  /* avoid flickering when task column size changes   */
+  overflow: hidden;
 }
 
 code {

@@ -5,21 +5,28 @@ import Subbar from './subbar/index';
 import CreateTask from '../task/CreateTask';
 import ViewTask from '../task/ViewTask';
 import { AppContext } from '../../context/AppProvider';
+import { useParams } from 'react-router-dom';
+import { styled } from 'styled-components';
 
 export default function Workspace() {
-  const { workspaceList, visibleTask } = React.useContext(AppContext);
+  const Container = styled.div`
+  padding-right: 16px;
+  height: 100vh;
+  `
+  let { workspaceId } = useParams()
+  const { workspaceList, visibleTask, setSelectedWorkspace } = React.useContext(AppContext);
+
+  React.useEffect(() => {
+    setSelectedWorkspace(workspaceId)
+  }, [workspaceId]);
 
   return (
-    <div style={{
-      paddingRight: '16px'
-    }}>
-      <Header></Header>
-      <Subbar></Subbar>
-      {workspaceList.length !== 0 &&
-        <Main></Main>
-      }
-      <CreateTask></CreateTask>
-      {visibleTask && <ViewTask></ViewTask>}
-    </div >
+    <Container>
+      <Header />
+      <Subbar />
+      {(workspaceList.length > 0) && <Main />}
+      {visibleTask && <ViewTask />}
+      <CreateTask />
+    </Container>
   )
 }

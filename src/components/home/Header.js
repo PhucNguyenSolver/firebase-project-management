@@ -4,6 +4,7 @@ import { AppContext } from '../../context/AppProvider';
 import { Avatar, Tooltip, Button, Modal, Input, Dropdown, Menu } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { editDocumentById, deleteDocumentById } from '../../firebase/service';
+import AddMemberModal from '../modal/AddMemberModal';
 
 import './header.scss';
 
@@ -132,6 +133,7 @@ export default function Header() {
           <Avatar size="large" style={{ color: '#f56a00', backgroundColor: '#fde3cf', marginLeft: "10px" }} key={user.uid} src={user.photoURL} />
         </Tooltip>
       </div>
+      <AddMemberModal />
     </div>
   )
 }

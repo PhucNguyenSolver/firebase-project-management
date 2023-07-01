@@ -8,6 +8,11 @@ import Home from './components/home/index';
 import AddMemberModal from './components/modal/AddMemberModal';
 import { useLocation, Link, Redirect, useHistory } from 'react-router-dom';
 import { useContext } from 'react';
+import { AppContext } from './context/AppProvider';
+import Sidebar from './components/home/Sidebar';
+import Dashboard from './components/home/dashboard/Dashboard';
+import AppPageLayout from './components/layout/AppPageLayout';
+import Workspace from './components/home/Workspace';
 
 export default function SecondApp() {
   return (
@@ -19,7 +24,9 @@ export default function SecondApp() {
             <Redirect to="/my" />
           </Route>
           <PrivateRoute path="/my">
-            <AppPage />
+            <AppProvider>
+              <AppPage />
+            </AppProvider>
           </PrivateRoute>
           <Route path="/login">
             <LoginPage />
@@ -63,17 +70,6 @@ const LoginPage = (props) => {
   return <Login onSuccess={() => history.replace(from)} />
 }
 
-const AppPage = () => {
-  return (
-    <AppProvider>
-      <ViewProvider>
-        <Home />
-      </ViewProvider>
-      <AddMemberModal />
-    </AppProvider>
-  )
-}
-
 const NoMatchPage = () => {
   let location = useLocation();
   return (
@@ -110,5 +106,31 @@ export const SiteMap = () => {
         <AuthButton />
       </li>
     </ul>
+  )
+}
+
+const AppPage = () => {
+  let left = (
+    <Sidebar />
+  )
+
+  let right = (
+    <Switch>
+      <Route path="/my/:workspaceId">
+        <Workspace />
+      </Route>
+      <Route exact path="/my">
+        <Dashboard />
+      </Route>
+      <Route path="/*">
+        <NoMatchPage />
+      </Route>
+    </Switch>
+  )
+
+  return (
+    <ViewProvider>
+      <AppPageLayout left={left} right={right} />
+    </ViewProvider>
   )
 }

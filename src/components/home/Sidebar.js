@@ -11,11 +11,22 @@ import { Menu, Dropdown } from 'antd';
 import { deleteDocumentById, editDocumentById } from '../../firebase/service';
 import { getAuth, signOut } from '@firebase/auth';
 import './sidebar.scss';
+import { useHistory } from 'react-router-dom';
 
 const { Panel } = Collapse;
 
-export default function Sidebar() {
-  const { status, setStatus, workspaceList } = useContext(AppContext);
+export default function Sidebar() {  
+  const { status, workspaceList } = useContext(AppContext);
+  const history = useHistory()
+
+  const navigateToDashboard = () => {
+    history.push("/my")
+  }
+
+  const navigateToWorkspace = (_id) => {
+    history.push(`/my/${_id}`)
+  }
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [input, setInput] = useState('');
   const [modalMenu, setModalMenu] = useState({
@@ -49,7 +60,7 @@ export default function Sidebar() {
 
   const handleOkMenu = () => {
     if (modalMenu.type === 'delete') {
-      setStatus('dashboard');
+      navigateToDashboard()
       deleteDocumentById('workspace', status);
     }
     else {
@@ -71,7 +82,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <ul>
-        <li onClick={() => setStatus('dashboard')} className={(status === 'dashboard') ? "active-border" : ""}>
+        <li onClick={navigateToDashboard} className={(status === 'dashboard') ? "active-border" : ""}>
           <AppstoreTwoTone className="icon" />
           <Typography.Link >DashBoard</Typography.Link>
         </li>
@@ -83,7 +94,7 @@ export default function Sidebar() {
                   style={{ width: "100%" }}
                   className={(status === item.id) ? "active-border" : ""}
                   key={item.id}
-                  onClick={() => setStatus(item.id)}
+                  onClick={() => navigateToWorkspace(item.id)}
                 > {item.name}
                   <Dropdown overlay={(
                     <Menu>

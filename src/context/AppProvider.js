@@ -15,6 +15,7 @@ export default function AppProvider({ children }) {
   const [visibleDBTask, setVisibleDBTask] = useState(false);
   const { user: { uid }, } = React.useContext(AuthContext);
   const [AddMemberVisible, setAddMemberVisible] = useState(false);
+  const setSelectedWorkspace = (_id) => setStatus(_id)
 
 
   // Condition 1: Take workspace has memberIdList has that person
@@ -102,6 +103,7 @@ export default function AppProvider({ children }) {
         status,
         workspaceList,
         setStatus,
+        setSelectedWorkspace,
         memberList,
         dashboardTask,
         DBmemberList,
