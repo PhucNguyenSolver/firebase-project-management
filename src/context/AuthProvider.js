@@ -8,33 +8,31 @@ export const AuthContext = React.createContext();
 export default function AuthProvider({ children }) {
   const auth = getAuth();
   const [user, setUser] = useState({});
+  const logout = () => {
+    setUser(null)
+  }
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
-    const unsubscibed = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { displayName, email, uid, photoURL } = user;
-        setUser({
-          displayName,
-          email,
-          uid,
-          photoURL
-        });
+    const unsubscibed = onAuthStateChanged(auth, (_user) => {
+      if (_user) {
+        setUser(_user);
         setIsLoading(false);
-        history.push('/');
         return;
       }
+      logout()
       setIsLoading(false);
-      history.push('/login');
     });
     return () => {
       unsubscibed();
     }
   }, [history, auth]);
   return (
-    <AuthContext.Provider value={{ user }}>
-      {isLoading ? <Spin style={{ position: 'fixed', inset: 0 }} /> : children}
+    <AuthContext.Provider value={{ user, logout }}>
+      {isLoading ? <Loading /> : children}
     </AuthContext.Provider>
   );
 }
+
+const Loading = () => <Spin style={{ position: 'fixed', inset: 0 }} />

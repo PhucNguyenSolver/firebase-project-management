@@ -1,58 +1,16 @@
 import React from 'react';
 import { Button } from 'antd';
 import { GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
-import { signInWithPopup, GoogleAuthProvider, getAuth, FacebookAuthProvider, getAdditionalUserInfo } from "firebase/auth";
-import { addDocument, generateKeywords } from '../../firebase/service';
-import { serverTimestamp } from 'firebase/firestore';
 import logo from './logoDelta.png';
 import './index.scss';
+import { facebookLoginHandler, googleLoginHandler, passwordLoginHandler } from "../../services/auth"
 
-const auth = getAuth();
-const ggProvider = new GoogleAuthProvider();
-const fbProvider = new FacebookAuthProvider();
 
-export default function Login() {
-  const handleGgLogin = () => {
-    try {
-      signInWithPopup(auth, ggProvider)
-        .then(data => {
-          if (getAdditionalUserInfo(data).isNewUser) {
-            addDocument("person", {
-              email: data.user.email,
-              name: data.user.displayName,
-              avaURL: data.user.photoURL,
-              createdAt: serverTimestamp(),
-              uid: data.user.uid,
-              keywords: generateKeywords(data.user.displayName?.toLowerCase()),
-            })
-          }
-        })
-        .catch(err => console.log(err));
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
-  const handleFbLogin = () => {
-    try {
-      signInWithPopup(auth, fbProvider)
-        .then(data => {
-          if (getAdditionalUserInfo(data).isNewUser) {
-            addDocument("person", {
-              email: data.user.email,
-              name: data.user.displayName,
-              avaURL: data.user.photoURL,
-              createdAt: serverTimestamp(),
-              uid: data.user.uid,
-              keywords: generateKeywords(data.user.displayName?.toLowerCase()),
-            })
-          }
-        })
-        .catch(err => console.log(err));
-    }
-    catch (err) {
-      console.log(err)
-    }
+export default function Login({ onSuccess = () => { } }) {
+  const alertError = (any) => {
+    console.error(any)
+    if (typeof any == "string") alert(any)
+    else alert("Không thể đăng nhập. Vui lòng đăng nhập bằng phương thức khác.")
   }
   return (
     <div className="wrapper">
@@ -78,7 +36,15 @@ export default function Login() {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={handleGgLogin}
+            // onClick={() => googleLoginHandler().catch(alertError)}
+            onClick={async () => {
+              try {
+                await googleLoginHandler()
+                onSuccess && onSuccess()
+              } catch (e) {
+                alertError(e)
+              }
+            }}
           >
             <GoogleOutlined style={{ fontSize: '18px' }} />Đăng nhập bằng Google
           </Button>
@@ -94,9 +60,25 @@ export default function Login() {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={handleFbLogin}
+            onClick={() => facebookLoginHandler().catch(alertError)}
           >
             <FacebookOutlined style={{ fontSize: '18px' }} />Đăng nhập bằng Facebook
+          </Button>
+        </div>
+
+        <div className="btn-wrapper">
+          <Button
+            style={{
+              width: "350px",
+              marginBottom: 7,
+              height: "40px",
+              background: '#3b5998',
+              color: 'white',
+              fontSize: '16px'
+            }}
+            onClick={() => passwordLoginHandler().catch(alertError)}
+          >
+            Phương thức khác
           </Button>
         </div>
       </div>

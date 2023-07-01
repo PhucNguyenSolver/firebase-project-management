@@ -7,7 +7,7 @@ import ViewProvider from './context/ViewProvider';
 import Home from './components/home/index';
 import AddMemberModal from './components/modal/AddMemberModal';
 
-function App() {
+export default function App() {
   return (
     <Router>
       <AuthProvider>
@@ -24,5 +24,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
