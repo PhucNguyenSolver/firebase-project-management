@@ -9,18 +9,6 @@ COPY package*.json ./
 
 # Install the application's dependencies
 RUN npm install
+RUN npm install -g nodemon
 
-# Copy the rest of the application's files to the container
-COPY . .
-
-# Build the application
-RUN npm run build
-
-# Install serve to serve the static files
-RUN npm install -g serve
-
-# Expose port 5000 in the container
-EXPOSE 3000
-
-# Start the application
-CMD ["serve", "-s", "build"]
+# docker run -p 3000:3000 --volume $(pwd):/app -it --rm  deltaplus sh -c "npm run start"
