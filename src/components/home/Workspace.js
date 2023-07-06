@@ -6,7 +6,7 @@ import CreateTask from '../task/CreateTask';
 import ViewTask from '../task/ViewTask';
 import { AppContext } from '../../context/AppProvider';
 import { useParams } from 'react-router-dom';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 
 export default function Workspace() {
   const Container = styled.div`
