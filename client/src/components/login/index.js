@@ -10,15 +10,22 @@ import { AuthContext } from '../../context/AuthProvider';
 export default function Login() {
   let location = useLocation()
   let history = useHistory()
-  let { from } = location.state || { from: "/" }
   let { user, loginWith, loginGuest } = React.useContext(AuthContext)
-  const onSuccess = () => history.replace(from)
+
+  React.useEffect(() => {
+    if (user) {
+      let from = location?.state?.from || "/"
+      history.replace(from)
+    }
+  }, [user])
 
   const alertError = (any) => {
     console.error(any)
     if (typeof any == "string") alert(any)
-    else alert("Không thể đăng nhập. Vui lòng đăng nhập bằng phương thức khác.")
+    else alert("Cannot login. \nPlease check your internet connection or choose another method.")
   }
+
+  const onSuccess = () => { }
 
   return (
     <div className="wrapper">
@@ -72,13 +79,13 @@ export default function Login() {
               width: "350px",
               marginBottom: 7,
               height: "40px",
-              background: '#3b5998',
+              background: '#D62D20',
               color: 'white',
               fontSize: '16px'
             }}
             onClick={() => loginWith("google").then(onSuccess).catch(alertError)}
           >
-            <GoogleOutlined style={{ fontSize: '18px' }} />Login with Google
+            <GoogleOutlined style={{ fontSize: '18px' }} />Login with Google&nbsp;&nbsp;&nbsp;
           </Button>
         </div>
       </div>

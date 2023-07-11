@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Spin } from 'antd';
+import LoadingView from '../components/LoadingView.js';
 import { phuc } from './user-data.js'
 import { serverTimestamp } from 'firebase/firestore';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, getAuth, FacebookAuthProvider, getAdditionalUserInfo, signInAnonymously } from "firebase/auth";
 import { addDocument, generateKeywords } from '../firebase/service';
+import { withPreAndPostExecutionBehavior as extendBehavior } from '../utils'
 
 let getAuthProvider = (function () {
   const fbInstance = new FacebookAuthProvider()
@@ -12,7 +13,7 @@ let getAuthProvider = (function () {
     switch (str) {
       case "google": return ggInstance
       case "facebook": return fbInstance
-      default: throw "Not implemented"
+      default: throw { message: "Not implemented" }
     }
   }
 })()
@@ -76,18 +77,17 @@ export default function AuthProvider({ children }) {
     console.info({ user })
   }, [user])
 
+  const preFn = () => setIsLoading(true)
+  const afterFn = () => setIsLoading(false)
   return (
     <AuthContext.Provider value={{
       user,
       logout,
-      loginWith,
-      loginGuest,
+      loginWith: extendBehavior(loginWith, preFn, afterFn),
+      loginGuest: extendBehavior(loginGuest, preFn, afterFn),
     }}>
-      {isLoading ? <Loading /> : children}
+      {children}
+      {isLoading && <LoadingView />}
     </AuthContext.Provider>
   );
-}
-
-const Loading = () => {
-  return <Spin style={{ position: 'fixed', inset: 0 }} />
 }
