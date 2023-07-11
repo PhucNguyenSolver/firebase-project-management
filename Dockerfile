@@ -10,5 +10,3 @@ COPY package*.json ./
 # Install the application's dependencies
 RUN npm install
 RUN npm install -g nodemon
-
-# docker run -p 3000:3000 --volume $(pwd):/app -it --rm  deltaplus sh -c "npm run start"

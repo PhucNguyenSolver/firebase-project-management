@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from 'antd';
-import { GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
+import { GoogleOutlined, FacebookOutlined, UserOutlined } from '@ant-design/icons';
 import logo from './logoDelta.png';
 import './index.scss';
-import { facebookLoginHandler, googleLoginHandler, passwordLoginHandler } from "../../services/auth"
+import authService from "../../services/AuthService"
 import { useHistory, useLocation } from 'react-router-dom';
 
 
@@ -43,9 +43,9 @@ export default function Login() {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={() => googleLoginHandler().then(onSuccess).catch(alertError)}
+            onClick={() => authService.loginGuest().then(onSuccess).catch(alertError)}
           >
-            <GoogleOutlined style={{ fontSize: '18px' }} />Đăng nhập bằng Google
+            <UserOutlined style={{ fontSize: '18px' }} />Login demo account
           </Button>
         </div>
 
@@ -59,9 +59,9 @@ export default function Login() {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={() => facebookLoginHandler().then(onSuccess).catch(alertError)}
+            onClick={() => authService.loginWith("facebook").then(onSuccess).catch(alertError)}
           >
-            <FacebookOutlined style={{ fontSize: '18px' }} />Đăng nhập bằng Facebook
+            <FacebookOutlined style={{ fontSize: '18px' }} />Login with Facebook
           </Button>
         </div>
 
@@ -75,9 +75,9 @@ export default function Login() {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={() => passwordLoginHandler().then(onSuccess).catch(alertError)}
+            onClick={() => authService.loginWith("google").then(onSuccess).catch(alertError)}
           >
-            Phương thức khác
+            <GoogleOutlined style={{ fontSize: '18px' }} />Login with Google
           </Button>
         </div>
       </div>
