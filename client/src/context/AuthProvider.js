@@ -1,45 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import { useHistory } from 'react-router-dom';
+import { loginWith, loginGuest } from './AuthService'
 import { Spin } from 'antd';
 import { phuc } from './user-data.js'
 
 export const AuthContext = React.createContext();
 
-function fillGuestData(initial) {
-  return { ...initial, ...phuc }
-}
+
+function fillGuestData(initial) { return { ...initial, ...phuc } }
+
 
 export default function AuthProvider({ children }) {
-  const auth = getAuth();
-  const [user, setUser] = useState({});
-  const logout = () => {
-    setUser(null)
-  }
+  const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const history = useHistory();
+  function logout() { setUser() }
 
   useEffect(() => {
+    const auth = getAuth()
     const unsubscibed = onAuthStateChanged(auth, (_user) => {
-      if (_user) {
-        console.log({ _user })
-        if (_user.isAnonymous) setUser(fillGuestData(_user))
-        else setUser(_user);
-        setIsLoading(false);
-        return;
-      }
-      logout()
       setIsLoading(false);
+      if (!_user) {
+        logout()
+      } else if (_user.isAnonymous) {
+        setUser(fillGuestData(_user))
+      } else {
+        setUser(_user)
+      }
     });
-    return () => {
-      unsubscibed();
-    }
-  }, [history, auth]);
+    return unsubscibed
+  }, []);
+
+  useEffect(() => {
+    console.info("updated")
+    console.info({ user })
+  }, [user])
+
   return (
-    <AuthContext.Provider value={{ user, logout }}>
+    <AuthContext.Provider value={{
+      user,
+      logout,
+      loginWith,
+      loginGuest,
+    }}>
       {isLoading ? <Loading /> : children}
     </AuthContext.Provider>
   );
 }
 
-const Loading = () => <Spin style={{ position: 'fixed', inset: 0 }} />
+const Loading = () => {
+  return <Spin style={{ position: 'fixed', inset: 0 }} />
+}

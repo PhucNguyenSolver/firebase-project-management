@@ -3,14 +3,15 @@ import { Button } from 'antd';
 import { GoogleOutlined, FacebookOutlined, UserOutlined } from '@ant-design/icons';
 import logo from './logoDelta.png';
 import './index.scss';
-import authService from "../../services/AuthService"
 import { useHistory, useLocation } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider';
 
 
 export default function Login() {
   let location = useLocation()
   let history = useHistory()
   let { from } = location.state || { from: "/" }
+  let { user, loginWith, loginGuest } = React.useContext(AuthContext)
   const onSuccess = () => history.replace(from)
 
   const alertError = (any) => {
@@ -43,7 +44,7 @@ export default function Login() {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={() => authService.loginGuest().then(onSuccess).catch(alertError)}
+            onClick={() => loginGuest().then(onSuccess).catch(alertError)}
           >
             <UserOutlined style={{ fontSize: '18px' }} />Login demo account
           </Button>
@@ -59,7 +60,7 @@ export default function Login() {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={() => authService.loginWith("facebook").then(onSuccess).catch(alertError)}
+            onClick={() => loginWith("facebook").then(onSuccess).catch(alertError)}
           >
             <FacebookOutlined style={{ fontSize: '18px' }} />Login with Facebook
           </Button>
@@ -75,7 +76,7 @@ export default function Login() {
               color: 'white',
               fontSize: '16px'
             }}
-            onClick={() => authService.loginWith("google").then(onSuccess).catch(alertError)}
+            onClick={() => loginWith("google").then(onSuccess).catch(alertError)}
           >
             <GoogleOutlined style={{ fontSize: '18px' }} />Login with Google
           </Button>
