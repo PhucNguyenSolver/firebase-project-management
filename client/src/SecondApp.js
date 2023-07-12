@@ -6,7 +6,7 @@ import AppProvider from './context/AppProvider';
 import AuthProvider, { AuthContext } from './context/AuthProvider';
 import ViewProvider from './context/ViewProvider';
 import { Redirect } from 'react-router-dom';
-import Sidebar from './components/home/Sidebar';
+import Sidebar from 'components/sidebar/Sidebar.container';
 import Dashboard from './components/home/dashboard/Dashboard';
 import Workspace from './components/home/Workspace';
 import AppPageLayout from './components/layout/AppPageLayout';
