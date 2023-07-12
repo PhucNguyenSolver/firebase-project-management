@@ -1,43 +1,32 @@
-/**
- * @typedef UserDTO
- * @type {object}
- * @property {string} id - The user's ID.
- * @property {string} name - The user's name.
- * @property {string} email - The user's email.
- */
+export class UserDTO {
+  constructor(id, name, email) {
+    this.id = id
+    this.name = name
+    this.email = email
+  }
+
+  toString() { return [this.id, this.name, this.email].join(', ') }
+}
 
 
 /**
  * An interface for a class that supports CRUD operations on users.
  * @interface
  */
-class IUsers {
+export default class IUsers {
   /**
    * Creates a new user.
-   * @param {UserDTO} user - The user to create.
+   * @param {string} userId - The ID of the user to create.
+   * @param {UserDTO} user - The user data to create.
    * @returns {Promise<void>}
    */
-  async create(user) { }
+  async create(userId, user) { }
 
   /**
    * Reads a user by ID.
-   * @param {string} id - The ID of the user to read.
+   * @param {string} userId - The ID of the user to read.
    * @returns {Promise<UserDTO | undefined>}
+   * return undefined if not found
    */
-  async read(id) { }
-
-  /**
-   * Updates a user by ID.
-   * @param {string} id - The ID of the user to update.
-   * @param {Partial<UserDTO>} data - The data to update the user with.
-   * @returns {Promise<void>}
-   */
-  async update(id, data) { }
-
-  /**
-   * Deletes a user by ID.
-   * @param {string} id - The ID of the user to delete.
-   * @returns {Promise<void>}
-   */
-  async delete(id) { }
+  async read(userId) { }
 }

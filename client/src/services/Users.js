@@ -1,34 +1,40 @@
-import { getFirestore, collection, addDoc, getDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import IUsers, { UserDTO } from './IUsers'
+import db from './persistent'
 
 /**
- * A class that implements the {@link IUsers} interface and supports CRUD operations on users.
+ * 
  * @implements {IUsers}
+ * @augments IUsers
  */
-class Users {
+export default class Users extends IUsers {
   constructor() {
-    this.db = getFirestore();
-    this.usersCollection = collection(this.db, 'test.users');
+    this.db = db
+    this.table = 'test.users'
   }
 
-  async create(user) {
-    await addDoc(this.usersCollection, user);
+  async create(userId, user) {
+    let ref = doc(this.db, this.table, userId).withConverter(userConverter)
+    await setDoc(ref, user);
   }
 
-  async read(id) {
-    const userDoc = await getDoc(doc(this.usersCollection, id));
-    if (userDoc.exists()) {
-      return userDoc.data();
-    } else {
-      return undefined;
-    }
-  }
-
-  async update(id, data) {
-    await updateDoc(doc(this.usersCollection, id), data);
-  }
-
-  async delete(id) {
-    await deleteDoc(doc(this.usersCollection, id));
+  async read(userId) {
+    let ref = doc(this.db, this.table, userId).withConverter(userConverter)
+    let snapshot = await getDoc(ref)
+    return snapshot.data()
   }
 }
+
+const userConverter = {
+  toFirestore: (user) => {
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+  },
+  fromFirestore: (snapshot, options) => {
+    const data = snapshot.data(options);
+    return new UserDTO(data.id, data.name, data.email)
+  },
+};
