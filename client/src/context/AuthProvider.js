@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LoadingView from '../components/LoadingView.js';
 import { phuc } from './user-data.js'
 import { serverTimestamp } from 'firebase/firestore';
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, getAuth, FacebookAuthProvider, getAdditionalUserInfo, signInAnonymously } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, getAuth, FacebookAuthProvider, getAdditionalUserInfo, signInAnonymously, signOut } from "firebase/auth";
 import { addDocument, generateKeywords } from '../firebase/service';
 import { withPreAndPostExecutionBehavior as extendBehavior } from '../utils'
 
@@ -55,7 +55,10 @@ function fillGuestData(initial) { return { ...initial, ...phuc } }
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  function logout() { setUser() }
+  function logout() {
+    setUser()
+    signOut(getAuth())
+  }
 
   useEffect(() => {
     const auth = getAuth()
