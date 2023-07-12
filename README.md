@@ -15,8 +15,9 @@
 - Backend: `Native-JS` `Firebase` (*Firestore* and *Authentication*)
  
 ## feature-request
+- [x] login as guest
 - [ ] add change-log workspace
-  - available to everyone
+  - available to guest
   - read-only, but
   - editable by admin account (nguyenhuuphuc.cse@gmail.com)
   - anyone can leave comment or feature-request !?
@@ -29,7 +30,6 @@
 - [ ] export csv
 - [ ] markdown description feature
 - [ ] chat feature
-- [ ] login with username + password feature 
 - [ ] backup data !?
 - [ ] attach image feature !?
 
