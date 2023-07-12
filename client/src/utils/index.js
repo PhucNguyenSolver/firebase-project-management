@@ -1,3 +1,8 @@
+export function getRandomName() {
+  const randomPath = Math.random().toString(36).substring(2);
+  return randomPath
+}
+
 export function withPreAndPostExecutionBehavior(fn, preFn = () => { }, afterFn = () => { }) {
   return async function (...args) {
     try {
