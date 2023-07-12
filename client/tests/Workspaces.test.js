@@ -6,7 +6,8 @@ describe('WorkspaceService', () => {
 
   describe('create', () => {
     it('should not create if existed (throw)', async () => {
-      let oldOne = new WorkspaceDTO('dev', 'phucId', ['phucId'], ['col1'])
+      let oldOne = new WorkspaceDTO(getRandomName(), 'phucId', ['phucId'], ['col1'])
+      await ws.create(oldOne)
       await expect(ws.create(oldOne)).rejects.toThrow()
     })
 

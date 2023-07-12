@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
 import db from "./persistent"
 
 export class WorkspaceDTO {
@@ -8,8 +8,8 @@ export class WorkspaceDTO {
     this.members = members
     this.owner = owner
   }
-  withUrl(url) {
-    this.url = url
+  withId(id) {
+    this.id = id
     return this
   }
   toString() { return JSON.stringify(this) }
@@ -23,7 +23,8 @@ export class WorkspaceDTO {
 export default class WorkspaceService {
   constructor() {
     this.db = db
-    this.table = 'test.workspace'
+    this.table = 'workspace'
+    // this.table = 'test.workspace'
     this.collection = collection(this.db, this.table).withConverter(workspaceConverter)
   }
 
@@ -63,14 +64,19 @@ export default class WorkspaceService {
 
   async rename(workspaceId, newName) {
     let ref = doc(this.collection, workspaceId)
-    await updateDoc(ref, { name: newName }, { merge: true })
+    await updateDoc(ref, { "name": newName })
   }
 
   async addMember(workspaceId, memberId) {
     let oldMembers = (await this.getById(workspaceId)).members
     if (oldMembers.includes(memberId)) return
     let ref = doc(this.collection.workspaceId)
-    await updateDoc(ref, { members: [...oldMembers, memberId] }, { merge: true })
+    await updateDoc(ref, { "members": [...oldMembers, memberId] })
+  }
+
+  async delete(workspaceId) {
+    let ref = doc(this.collection, workspaceId)
+    await deleteDoc(ref)
   }
 }
 
@@ -93,6 +99,6 @@ const workspaceConverter = {
       data.memberIdList,
       data.columnIdList,
     )
-      .withUrl(snapshot.id)
+      .withId(snapshot.id)
   },
 };
