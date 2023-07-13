@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
-import { Checkbox, Typography, Avatar, Tooltip } from 'antd';
+import { Typography, Avatar, Tooltip, Checkbox } from 'antd';
 import "./dashboard.scss";
-import { AuthContext } from '../../../context/AuthProvider';
 import "../../main/task.scss";
-import { Field, ViewContext } from "../../../context/ViewProvider";
-import { AppContext } from '../../../context/AppProvider';
 import ListTask from './ListTasks';
 import ViewDBTask from './ViewDBTask';
+import { Field, ViewContext } from "context/ViewProvider";
+import { AuthContext } from 'context/AuthProvider';
+import { AppContext } from 'context/AppProvider';
+
 
 const { Title } = Typography;
 
@@ -32,33 +33,6 @@ export default function Dashboard() {
     console.log({ fields });
   };
 
-  function CustomSwitch({ checked, onChange }) {
-    const handleChange = (e) => {
-      onChange(e.target.checked);
-    };
-    return (<>
-      <Checkbox checked={checked} onChange={handleChange} />
-    </>);
-  }
-
-  function ToggleItem({ id, name, isActive, handleChange }) {
-    const onChange = (newState) => {
-      handleChange(id, newState);
-    };
-    const handleClick = () => {
-      handleChange(id, !isActive);
-    };
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-1">
-            <CustomSwitch checked={isActive} onChange={onChange} />
-          </div>
-          <div className="col-9" style={{ wordBreak: "keep-all" }} onClick={handleClick}>{name}</div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="dashboard">
@@ -95,4 +69,44 @@ export default function Dashboard() {
       })}
     </div>
   )
+}
+
+
+function ToggleItem({ id, name, isActive, handleChange = (id, newState) => { } }) {
+  const onChange = (newState) => {
+    handleChange(id, newState);
+  };
+  const handleClick = () => {
+    handleChange(id, !isActive);
+  };
+
+  return (
+    <div class="container" key={id}
+      style={{
+        flexDirection: 'row', justifyContent: 'space-between',
+        backgroundColor: '#f0f0f0',
+        padding: '.3rem',
+        marginLeft: '1rem'
+      }}>
+      <span>
+        {/* <span className="col-9" onClick={handleClick}>{"FU"}</span> */}
+        <CustomSwitch checked={isActive} onChange={onChange} />
+      </span>
+      <span style={{
+        float: 'right', marginLeft: '.6rem'
+      }}>
+        {/* <span className="col-9" onClick={handleClick}>{"FU"}</span> */}
+        <div className="col-9" style={{ wordBreak: "keep-all" }} onClick={handleClick}>{name}</div>
+      </span>
+    </div>
+  )
+}
+
+function CustomSwitch({ checked, onChange }) {
+  const handleChange = (e) => {
+    onChange(e.target.checked);
+  };
+  return (<>
+    <Checkbox checked={checked} onChange={handleChange} />
+  </>);
 }
