@@ -17,10 +17,6 @@ export default function PropsMenu() {
     active: isFieldVisible(f.id),
   }));
 
-  // useEffect(() => {
-  //   console.log("state changed");
-  // }, [state]);
-
   const handleChange = (victimId, newState) => {
     setFieldVisible(victimId, newState);
     // console.log({fields});
@@ -34,34 +30,22 @@ export default function PropsMenu() {
   return (
     <div className="container props-menu">
       <Menu className="my-menu">
-        <Menu.Item key="hello-sa">
-          <ToggleAllItem onChange={handleChangeAll} />
-        </Menu.Item>
         {fields.map((f) => (
-          <Menu.Item key={f.id}>
-            <ToggleItem
-              id={f.id}
-              name={f.name}
-              isActive={f.active}
-              handleChange={handleChange}
-            />
-          </Menu.Item>
+          <ItemToggle
+            id={f.id}
+            name={f.name}
+            isActive={f.active}
+            handleChange={handleChange}
+          />
         ))}
+        <ItemShowAll onChange={handleChangeAll} />
       </Menu>
     </div>
   );
 }
 
-function CustomSwitch({ checked, onChange }) {
-  const handleChange = (e) => {
-    onChange(e.target.checked);
-  };
-  return (<>
-    <Checkbox checked={checked} onChange={handleChange} />
-  </>);
-}
 
-function ToggleItem({ id, name, isActive, handleChange }) {
+function ItemToggle({ id, name, isActive, handleChange }) {
   const onChange = (newState) => {
     handleChange(id, newState);
   };
@@ -69,38 +53,40 @@ function ToggleItem({ id, name, isActive, handleChange }) {
     handleChange(id, !isActive);
   };
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-9" onClick={handleClick}>{name}</div>
-        <div className="col-3">
-          <CustomSwitch checked={isActive} onChange={onChange} />
-        </div>
-      </div>
+    <Menu.Item key={id}>
+    <div class="container"
+      style={{
+        flexDirection: 'row', justifyContent: 'space-between',
+        // backgroundColor: 'gray'
+      }}>
+      <span>
+        <span className="col-9" onClick={handleClick}>{name}</span>
+      </span>
+      <span style={{
+        // backgroundColor: 'pink',
+        float: 'right', marginLeft: '3rem'
+      }}>
+          <Checkbox checked={isActive} onChange={(e) => onChange(e.target.checked)} />
+      </span>
     </div>
-  );
+    </Menu.Item>
+  )
 }
 
-function ToggleAllItem({ onChange }) {
+function ItemShowAll({ onChange }) {
   const [checked, setChecked] = useState();
-  const handleClick = () => {
+
+  const onClick = () => {
     if (checked === undefined) setChecked(true);
     else setChecked(!checked);
     onChange(!checked);
   };
 
-  return (
-    <div className="fluid-container">
-      <div className="row">
-        <div className="col">Show in board</div>
-        <div className="col">
-          <Button
-            onClick={handleClick}
-            type="text" size="small" className="fix-width"
-          >
-            {checked === true ? "Hide all" : "Show all"}
-          </Button>
-        </div>
-      </div>
+  return <Menu.Item key="nono">
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Button size="small" onClick={onClick} >
+        {checked === true ? "Hide all" : "Show all"}
+      </Button>
     </div>
-  );
+  </Menu.Item>
 }

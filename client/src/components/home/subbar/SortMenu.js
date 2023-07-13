@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Menu, Select } from "antd";
+import { Button, Menu, Select } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import { ViewContext, Field, Sort } from "../../../context/ViewProvider";
 
@@ -7,7 +7,7 @@ const { Option } = Select;
 
 
 export default function SortMenu() {
-  const {sortOptions, setSortOptions} = useContext(ViewContext);
+  const { sortOptions, setSortOptions } = useContext(ViewContext);
   const [allowedOptions, setAllowedOptions] = useState([
     { id: Field.NAME, value: Sort.ASC },
     { id: Field.DEADLINE, value: Sort.ASC },
@@ -44,24 +44,25 @@ export default function SortMenu() {
     setAllowedOptions(allowedOptions);
     setSelectedOptions([...selectedOptions, victim]);
   };
-  
+
   return (
     <Menu className="my-menu">
-      {selectedOptions.map((sortRule) =>
-        sortRule.value === null ? null : (
+      {
+        selectedOptions
+          .filter(sortRule => sortRule.value != null)
+          .map((sortRule) => (
           <Menu.Item key={sortRule.id}>
-            <div className="row">
-              <div className="col">
+              <div>
                 <Select
                   defaultValue={sortRule.id}
                   style={{ width: "7rem" }}
                   onChange={(candidate) => handleChange(sortRule.id, candidate)}
                 >
-                {allowedOptions.map((option) => (
-                  <Option label={option.id} key={option.id} value={option.id}>
-                    {option.id}
-                  </Option>
-                ))}
+                  {allowedOptions.map((option) => (
+                    <Option label={option.id} key={option.id} value={option.id}>
+                      {option.id}
+                    </Option>
+                  ))}
                 </Select>{' '}
                 <Select
                   defaultValue={sortRule.value}
@@ -71,14 +72,17 @@ export default function SortMenu() {
                   <Option value={Sort.ASC}>{Sort.ASC}</Option>
                   <Option value={Sort.DESC}>{Sort.DESC}</Option>
                 </Select>
-              </div>
-              <div className="col">
-                <CloseOutlined size={1} onClick={() => handleRemoveRule(sortRule.id)} />
-              </div>
+                <span style={{ marginLeft: "10px" }}>
+                  <Button
+                    onClick={() => handleRemoveRule(sortRule.id)}
+                    size='small'
+                    icon={<CloseOutlined />}
+                  />
+                </span>
             </div>
           </Menu.Item>
-        )
-      )}
+          ))
+      }
       <Menu.Item key="_addsort">
         <div onClick={handleAddRule}>
           <PlusOutlined /> Add a sort

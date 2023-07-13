@@ -3,9 +3,10 @@ import { Dropdown, Button, Input } from "antd";
 import "./subbar.scss";
 import SortMenu from "./SortMenu";
 import PropsMenu from "./PropsMenu";
-import FilterMenu from "./FilterMenu";
-import { ViewContext } from "../../../context/ViewProvider";
 import { debounce } from "lodash";
+import { SearchOutlined } from "@ant-design/icons";
+import { ViewContext } from "context/ViewProvider";
+
 
 const TIMEOUT = 300;
 export default function Subbar() {
@@ -19,28 +20,38 @@ export default function Subbar() {
   }
 
   return (
-    <div className="subbar container-fluid">
-      <div className="row d-flex justify-content-between align-items-center">
-        <div className="col-auto ps-3">
-          <div>#By Status</div>
-        </div>
-        <div className="col-auto col-md-8 col-xl-6">
-          <div className="d-flex justify-content-evenly">
-            <Dropdown overlay={<PropsMenu/>}>
-              <Button>Properties</Button>
-            </Dropdown>
-            <Dropdown overlay={<SortMenu />}>
-              <Button>Sort</Button>
-            </Dropdown>
-            <Input
-              value={keyword}
-              onChange={handleInputChange}
-              style={{ width: '10rem' }}
-              placeholder="Search"
-            />
-          </div>
-        </div>
+    <div
+      style={{
+        width: '100%',
+        height: '50px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 16px',
+      }}
+    >
+
+      <div type="primary" style={{ marginRight: 8 }}>
+        <Dropdown overlay={<PropsMenu />}>
+          <Button>Properties</Button>
+        </Dropdown>
+      </div>
+
+      <div type="primary" style={{ marginRight: 8 }}>
+        <Dropdown overlay={<SortMenu />}>
+          <Button>Sort</Button>
+        </Dropdown>
+      </div>
+
+      <div type="primary" style={{ marginRight: 8 }}>
+        <Input
+          value={keyword}
+          onChange={handleInputChange}
+          style={{ width: '10rem' }}
+          prefix={<SearchOutlined />}
+          placeholder="Search"
+        />
       </div>
     </div>
-  );
+  )
 }
