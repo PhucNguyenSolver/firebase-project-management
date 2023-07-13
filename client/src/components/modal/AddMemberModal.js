@@ -82,11 +82,11 @@ async function fetchUserList(search, curMembers) {
   return result.filter((value) => !curMembers.includes(value.value));
 }
 
-export default function AddMemberModal() {
+export default function AddMemberModal({
+  visible,
+  onBlur,
+}) {
   const {
-    AddMemberVisible,
-    setAddMemberVisible,
-    selectWorkspaceId,
     selectWorkspace,
   } = useContext(AppContext);
   const [value, setValue] = useState([]);
@@ -101,23 +101,16 @@ export default function AddMemberModal() {
     editDocumentById('workspace', selectWorkspace.id, {
       memberIdList: [...selectWorkspace.memberIdList, ...value.map((val) => val.value)]
     })
-    setAddMemberVisible(false);
-  };
-
-  const handleCancel = () => {
-    // reset form value
-    form.resetFields();
-    setValue([]);
-    setAddMemberVisible(false);
+    onBlur()
   };
 
   return (
     <div>
       <Modal
         title='Add New Member'
-        visible={AddMemberVisible}
+        open={visible}
         onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={onBlur}
         destroyOnClose={true}
       >
         <Form form={form} layout='vertical'>
