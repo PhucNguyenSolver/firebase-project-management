@@ -17,10 +17,10 @@
 ## feature-request
 - [x] login as guest
 - [ ] add change-log workspace
-  - available to guest
-  - read-only, but
-  - editable by admin account (nguyenhuuphuc.cse@gmail.com)
-  - anyone can leave comment or feature-request !?
+      - [x] editable by admin account (nguyenhuuphuc.cse@gmail.com)
+      - [x] available to guest account (login as guest)
+      - [ ] read-only, but
+      - [ ] anyone can leave comment or feature-request !?
 - [ ] history feature: 
   - save events related to task. these include:
   - column changed (e.g. TODO -> In Progress)
@@ -38,12 +38,13 @@
   - autofocus text-input and submit-button
   - autofocus when open modal
 - [ ] search in vietnamese not working (e.g "Phúc" did not work while "Phuc" work well)
+- [x] enable scroll horizontal when there is many column
 - [ ] exception when online user deleted from their workspace
 - [ ] make these name unique: workspace, column
 - [ ] assignee field should be optional (not required)
 - [ ] I have no idea who is the workspace's admin
 - [ ] I accidentally delete my workspace :(
-- [ ] save user's journey on reload
+- [x] save user's journey on reload
 - [ ] show toast on success
 - [ ] drag & drop
 
