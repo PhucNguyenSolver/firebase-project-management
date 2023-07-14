@@ -4,11 +4,11 @@
 - Can be used for personal tasks or collaborate project.
 - To create and manage tasks in multiple workspaces (teams).
 - Inspired by Notion board and Trello.
-- [Link Deploy](https://thanhdatdelta.herokuapp.com/)(the old version)
+
 > **Important:**
-> I'm making the old version --> into my personal portfolio, 
+> I'm making the [initial version]((https://thanhdatdelta.herokuapp.com/)) --> into my personal project,
 > with [more features](#feature-request) and [more improvements]([#What-can-be-improved?])
-> try out the new version here ...
+> try out the new version at: <https://deltaplus.netlify.app/>
  
 ## Technologies
 - Frontend: `NodeJS` `Ant-Design` `Bootstrap`
@@ -48,31 +48,39 @@
 - [ ] show toast on success
 - [ ] drag & drop
 
-## Useful Scripts
- 
-After you've got the codebase, you may need to install the app's dependencies:
-### `npm install`
-Wait for the installation to finish. You only need to do this for the first time.
- 
-You can run the command:
-### `npm start`
- 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
- 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
- 
-In development mode, you might want to host the Firestore locally. For more details, take a look at the document for [Firebase Emulator](https://firebase.google.com/docs/emulator-suite/connect_and_prototype)
-### `firebase emulators:start`
- 
-### `npm build`
- 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
- 
-The build is minified, the filenames include the hashes.\
-Your app is ready to be deployed!
- 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation 
+
+Pre-requisite:
+
+- Tested on node:18
+- ReactJS - [setup guide](https://www.geeksforgeeks.org/how-to-install-reactjs-on-windows/)
+
+This project consists of 2 seperate folder:
+- `client`: React app
+- `node-server` (in the future): connect with DB and support CRUD operations
+
+<!-- ### to start node-server
+you may want to change MongoDB config [here](node-server\app\config\db.config.js)
+
+```console
+cd node-server
+npm install
+npm start
+``` -->
+
+<!-- The server will be listening on [localhost:8080](http://localhost:8080) -->
+
+### to start React app
+
+```console
+cd client
+npm install
+npm start
+```
+The app will be available at [localhost:3000](http://localhost:3000)
+
+you might want to change the `firebase/config` in [this file](./client/src/firebase/config.js)
+
+you might also want to use `firebase emulator` for local dev environment. check out the [documentation](https://firebase.google.com/docs/emulator-suite/connect_and_prototype)
+
  
