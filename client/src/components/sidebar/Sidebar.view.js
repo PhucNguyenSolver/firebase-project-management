@@ -23,26 +23,24 @@ export default function Sidebar({ data, controller }) {
     workspaceId: id,
   })
 
+  let dashboardIsActive = false // TODO
   return (
-    <div className="sidebar" style={{
-      padding: '10px',
-      backgroundColor: 'gray'
-    }}>
+    <div className="sidebar">
       <ul>
-        <li onClick={onClickDashboard} className="active-border">
+        <li onClick={onClickDashboard} className={dashboardIsActive ? "active-border" : ""}>
           <AppstoreTwoTone className="icon" />
           <Typography.Link >DashBoard</Typography.Link>
         </li>
         <li>
-          <Collapse accordion={true} >
-            <Panel header="Workspace" >
+          <Collapse ghost defaultActiveKey={['1']}>
+            <Panel header="Workspace" key="1" >
               {workspaceList?.map(item => (
                 <PanelButton
                   id={item.id}
                   data={{
                     id: item.id,
                     name: item.name,
-                    selected: true, // TODO
+                    selected: false, // TODO
                     onClickText: onClickWorkspace,
                     onClickEdit,
                     onClickDelete,

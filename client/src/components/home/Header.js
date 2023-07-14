@@ -32,7 +32,8 @@ export default function HeaderContainer() {
   }
 
   function checkUserCanDeleteMember(memberId) {
-    let userIsOwner = user?.uid && user.uid === selectWorkspace?.createdById[0]
+    let workspaceOwner = selectWorkspace?.createdById && selectWorkspace.createdById[0]
+    let userIsOwner = user?.uid && user.uid === workspaceOwner
     return userIsOwner && user.uid != memberId
   }
 
@@ -82,7 +83,7 @@ export default function HeaderContainer() {
               )
             }
           </Menu>
-        )} trigger={['click', 'hover']}>
+        )} trigger={['click']}>
           <Button type="dashed">Edit Member</Button>
         </Dropdown>
 

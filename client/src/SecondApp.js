@@ -1,16 +1,18 @@
 import { useContext } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './firebase/config';
-import Login from "./components/login";
-import AppProvider from './context/AppProvider';
-import AuthProvider, { AuthContext } from './context/AuthProvider';
-import ViewProvider from './context/ViewProvider';
-import { Redirect } from 'react-router-dom';
-import Sidebar from 'components/sidebar/Sidebar.container';
-import Dashboard from './components/home/dashboard/Dashboard';
-import Workspace from './components/home/Workspace';
-import AppPageLayout from './components/layout/AppPageLayout';
-import PageNotFound from './components/layout/PageNotFound'
+
+import AuthProvider, { AuthContext } from 'context/AuthProvider';
+import AppProvider from 'context/AppProvider';
+import ViewProvider from 'context/ViewProvider';
+
+import { HStack } from 'components/layout/AppLayout';
+import Sidebar from 'components/sidebar';
+import Login from "components/login";
+import Workspace from 'components/home/Workspace';
+import Dashboard from 'components/home/dashboard/Dashboard';
+import PageNotFound from 'components/layout/PageNotFound'
+
 
 export default function SecondApp() {
   return (
@@ -22,7 +24,9 @@ export default function SecondApp() {
           </Route>
           <PrivateRoute path="/my">
             <AppProvider>
-              <AppPage />
+              <ViewProvider>
+                <App />
+              </ViewProvider>
             </AppProvider>
           </PrivateRoute>
           <Route path="/login">
@@ -60,28 +64,20 @@ function PrivateRoute({ children, ...rest }) {
   );
 }
 
-const AppPage = () => {
-  let left = (
-    <Sidebar />
-  )
-
-  let right = (
-    <Switch>
-      <Route path="/my/:workspaceId">
-        <Workspace />
-      </Route>
-      <Route exact path="/my">
-        <Dashboard />
-      </Route>
-      <Route path="/*">
-        <PageNotFound />
-      </Route>
-    </Switch>
-  )
-
+function App() {
   return (
-    <ViewProvider>
-      <AppPageLayout left={left} right={right} />
-    </ViewProvider>
+    <HStack
+      left={<Sidebar />}
+      right={<>
+        <Switch>
+          <Route path="/my/:workspaceId">
+            <Workspace />
+          </Route>
+          <Route exact path="/my">
+            <Dashboard />
+          </Route>
+        </Switch>
+      </>}
+    />
   )
 }

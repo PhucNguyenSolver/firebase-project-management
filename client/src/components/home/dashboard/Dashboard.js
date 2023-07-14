@@ -7,7 +7,7 @@ import ViewDBTask from './ViewDBTask';
 import { Field, ViewContext } from "context/ViewProvider";
 import { AuthContext } from 'context/AuthProvider';
 import { AppContext } from 'context/AppProvider';
-
+import { VStack } from 'components/layout/AppLayout';
 
 const { Title } = Typography;
 
@@ -35,7 +35,9 @@ export default function Dashboard() {
 
 
   return (
-    <div className="dashboard">
+    <VStack
+      left={<>
+        {/* <div className="dashboard"> */}
       <div className="dashboard-header">
         <div className="dashboard-subbar">
           <Title level={4}>Your Dash Board</Title>
@@ -57,6 +59,9 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      </>}
+
+      right={<>
       {visibleDBTask && <ViewDBTask></ViewDBTask>}
       {workspaceList.map((item) => {
         for (let i = 0; i < dashboardTask.length; i++) {
@@ -67,7 +72,8 @@ export default function Dashboard() {
           }
         }
       })}
-    </div>
+      </>}
+    />
   )
 }
 

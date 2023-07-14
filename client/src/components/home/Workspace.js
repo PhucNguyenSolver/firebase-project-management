@@ -6,13 +6,10 @@ import CreateTask from '../task/CreateTask';
 import ViewTask from '../task/ViewTask';
 import { AppContext } from '../../context/AppProvider';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { HScrollView, VStack } from 'components/layout/AppLayout';
+
 
 export default function Workspace() {
-  const Container = styled.div`
-  padding-right: 16px;
-  height: 100vh;
-  `
   let { workspaceId } = useParams()
   const { workspaceList, visibleTask, setSelectedWorkspace } = React.useContext(AppContext);
 
@@ -20,13 +17,20 @@ export default function Workspace() {
     setSelectedWorkspace(workspaceId)
   }, [workspaceId]);
 
-  return (
-    <Container>
+  return <VStack
+    left={<>
       <Header />
       <Subbar />
-      {(workspaceList.length > 0) && <Main />}
-      {visibleTask && <ViewTask />}
-      <CreateTask />
-    </Container>
-  )
+    </>}
+    right={
+      <HScrollView>
+        <div>
+          {(workspaceList.length > 0) && <Main />}
+          {visibleTask && <ViewTask />}
+          <CreateTask />
+        </div>
+      </HScrollView>
+    }
+  />
 }
+
