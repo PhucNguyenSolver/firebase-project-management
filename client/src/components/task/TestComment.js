@@ -19,7 +19,7 @@ function isAuthorized(auser, acomment) {
   return auser.uid === acomment.uid;
 }
 
-export default function TestComment() {
+export default function CommentSection() {
   const { curTask, memberList } = useContext(AppContext);
 
   // TODO: fetch current User
@@ -86,17 +86,16 @@ export default function TestComment() {
   return (<>
     <div className="container-fluid comment-section">
       <Button
-        onClick={() => setCollapse(!collapse)}
+        onClick={() => setCollapse(state => !state)}
         type="primary"
-        className="mb-2"
       >
         Comment ({comments.length})
         {collapse ? <CaretDownOutlined /> : <CaretUpOutlined />}
       </Button>
       <br/>
 
-      <div className={collapse ? "d-none" : ""}>
-        <div className='mb-2'>
+      <div>
+        <div style={{ display: collapse ? "none" : null }}>
           {comments.map((acomment, index) => <CommentItem
             key={acomment.id}
             comment={acomment}
@@ -106,8 +105,10 @@ export default function TestComment() {
             mutable={isAuthorized(user, acomment)}
           />)}
         </div>
-        <div className='d-flex'>
-          <TextArea className='flex-grow-1 mb-1 me-1'
+
+        <div flex style={{ display: "flex", flexDirection: "row", marginTop: ".6rem" }}>
+          <TextArea
+            style={{ flex: 1, marginRight: ".5rem" }}
             value={value}
             onChange={handleChange} 
             onSubmit={handleSubmit}
