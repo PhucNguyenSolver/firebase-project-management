@@ -1,7 +1,7 @@
 import { Modal, Comment, Avatar, Button, Input } from 'antd';
 import { EnterOutlined, ExclamationCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { timeSince } from './Utils'
+import { secondsToTimeUnit, timeSince } from './Utils'
 
 const { TextArea } = Input;
 const { confirm } = Modal;
@@ -37,7 +37,6 @@ export default function CommentItem({comment, index, mutable, onDelete, onModify
   const [tempValue, setTempValue] = useState("");
   const [active, setActive] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const _style = active ? 'bg-info' : ((index % 2) ? 'bg-dark' : 'bg-light');
 
   const onDeleteClick = () => {
     showConfirm(() => onDelete(comment));
@@ -59,6 +58,9 @@ export default function CommentItem({comment, index, mutable, onDelete, onModify
     setEditMode(false);
   }
   
+  const nowInSeconds = Math.floor(Date.now() / 1000)
+  const timeSinceCreated = secondsToTimeUnit(nowInSeconds - (comment?.timestamp?.seconds || nowInSeconds))
+
   const editModeParams = {
     content: <div>
       <TextArea 
@@ -86,12 +88,13 @@ export default function CommentItem({comment, index, mutable, onDelete, onModify
   
   const displayModeParams = {
     author: <h4 className='text-secondary'>{comment.person.name}</h4>,
-    datetime: <span className='text-secondary'>{timeSince(new Date(comment.timestamp)) + " ago"}</span>,
+    datetime: <span className='text-secondary'>{timeSinceCreated + " ago"}</span>,
     content: <p>{comment.content}</p>,
   }
 
   return (
-    <div className={"container-fluid position-relative " + _style}
+    <div
+      style={{ position: "relative" }}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
       onMouseOver={() => setActive(true)}
@@ -101,8 +104,12 @@ export default function CommentItem({comment, index, mutable, onDelete, onModify
         {...(editMode? editModeParams: displayModeParams)}
       >
       </Comment>
-      <div className={"position-absolute top-0 end-0 translate-middle " + (
-        (active && mutable)? "": "d-none")}>
+      <div style={{
+        position: "absolute",
+        top: "50%",
+        right: 0,
+        display: (active && mutable) ? "inline" : "none"
+      }}>
         <Button
           onClick={onDeleteClick}
           icon={<DeleteOutlined />}
