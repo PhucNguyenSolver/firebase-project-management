@@ -5,7 +5,7 @@ import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import moment from 'moment';
 import './index.scss';
 import { AppContext } from '../../context/AppProvider';
-import TestComment from './TestComment';
+import CommentSection from './CommentSection';
 import { deleteDocumentById, editDocumentById } from '../../firebase/service';
 
 const dateFormat = 'DD/MM/YYYY';
@@ -375,7 +375,7 @@ export default function ViewTask() {
             <Row className="desc-row">
                 <TextArea readOnly={!editMode} value={desc} onChange={descChange} placeholder="Description" autoSize={{ minRows: 5, maxRows: 10 }} />
             </Row>
-            {!editMode && <TestComment />}
+            {!editMode && <CommentSection />}
         </Modal>
     )
 }

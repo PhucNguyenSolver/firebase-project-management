@@ -81,6 +81,7 @@ export default function CommentSection() {
     });
     setSubmitting(false);
     setValue("");
+    setCollapse(false)
   }
 
   return (<>
