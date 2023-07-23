@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import './firebase/config';
 
 import AuthProvider, { AuthContext } from 'context/AuthProvider';
 import AppProvider from 'context/AppProvider';

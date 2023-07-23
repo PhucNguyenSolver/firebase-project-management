@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import IUsers, { UserDTO } from './IUsers'
-import db from './persistent'
+import db from 'configs/db'
 
 /**
  * 

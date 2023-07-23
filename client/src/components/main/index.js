@@ -3,7 +3,7 @@ import "./main.scss";
 import Column from './Column';
 import { Modal, Button, Input } from 'antd';
 import { AppContext } from '../../context/AppProvider';
-import { addDocument, editDocumentById } from '../../firebase/service';
+import { addDocument, editDocumentById } from '../../services/document.service';
 import { serverTimestamp } from 'firebase/firestore';
 import { ViewContext } from '../../context/ViewProvider';
 

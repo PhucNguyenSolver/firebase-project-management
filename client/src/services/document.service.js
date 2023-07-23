@@ -1,6 +1,5 @@
-import { collection, addDoc, doc, getFirestore, deleteDoc, updateDoc } from "firebase/firestore";
-
-const db = getFirestore();
+import db from 'configs/db'
+import { collection, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 
 export const addDocument = async (collectionParam, data) => {
   try {

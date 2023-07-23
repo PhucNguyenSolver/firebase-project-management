@@ -2,9 +2,10 @@ import React, { useContext, useState } from 'react';
 import { Form, Modal, Select, Spin, Avatar } from 'antd';
 import { AppContext } from '../../context/AppProvider';
 import { debounce } from 'lodash';
-import { editDocumentById } from '../../firebase/service';
+import { editDocumentById } from '../../services/document.service';
+import db from 'configs/db'
 
-import { getFirestore, collection, getDocs, doc, query, where, orderBy, limit } from 'firebase/firestore';
+import { collection, getDocs, query, where, limit } from 'firebase/firestore';
 
 //import firebase from 'firebase/app';
 
@@ -61,7 +62,6 @@ function DebounceSelect({
 }
 
 async function fetchUserList(search, curMembers) {
-  const db = getFirestore();
   let collectionRef = collection(db, 'person');
   var q = {};
   const result = [];

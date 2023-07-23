@@ -6,7 +6,7 @@ import moment from 'moment';
 import './index.scss';
 import { AppContext } from '../../context/AppProvider';
 import CommentSection from './CommentSection';
-import { deleteDocumentById, editDocumentById } from '../../firebase/service';
+import { deleteDocumentById, editDocumentById } from '../../services/document.service';
 
 const dateFormat = 'DD/MM/YYYY';
 

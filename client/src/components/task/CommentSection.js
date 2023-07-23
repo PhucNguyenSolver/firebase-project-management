@@ -4,7 +4,7 @@ import { CaretDownOutlined, CaretUpOutlined, SendOutlined } from '@ant-design/ic
 import CommentItem from './CommentItem';
 import { AppContext } from '../../context/AppProvider';
 import { AuthContext } from '../../context/AuthProvider';
-import { addDocument, deleteDocumentById, editDocumentById } from '../../firebase/service';
+import { addDocument, deleteDocumentById, editDocumentById } from '../../services/document.service';
 import { serverTimestamp } from 'firebase/firestore';
 import useFirebase from '../../hook/useFirebase';
 

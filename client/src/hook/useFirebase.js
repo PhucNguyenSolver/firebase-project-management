@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { collection, getFirestore, query, where, onSnapshot } from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+import db from 'configs/db'
 
 export default function useFirebase(collectionParam, condition) {
   const [document, setDocument] = useState([]);
-  const db = getFirestore();
   useEffect(() => {
     let collectionRef = collection(db, collectionParam);
     if (!condition) {

@@ -3,7 +3,7 @@ import { AuthContext } from 'context/AuthProvider';
 import { AppContext } from 'context/AppProvider';
 import { Avatar, Tooltip, Button, Modal, Dropdown, Menu } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
-import { editDocumentById, deleteDocumentById } from '../../firebase/service';
+import { editDocumentById, deleteDocumentById } from '../../services/document.service';
 import AddMemberModal from '../modal/AddMemberModal';
 
 import './header.scss';

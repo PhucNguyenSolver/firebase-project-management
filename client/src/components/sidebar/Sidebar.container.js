@@ -3,7 +3,7 @@ import { AuthContext } from 'context/AuthProvider'
 import { useHistory } from 'react-router-dom';
 import Sidebar from './Sidebar.view';
 import WorkspaceService, { WorkspaceDTO } from 'services/workspace.service.js';
-import useWorkspaceCollection from 'hook/useWorkspaceCollection';
+import { AppContext } from 'context/AppProvider';
 
 let service = new WorkspaceService()
 
@@ -14,7 +14,7 @@ export default function SidebarContainer() {
   const gotoWorkspace = (id) => { history.push(`/my/${id}`) }
 
   const { logout, user: { uid } } = useContext(AuthContext);
-  const [workspaces, _loading] = useWorkspaceCollection(uid)
+  const { workspaceList } = useContext(AppContext);
 
   const createWorkspace = (wsName) => {
     let newOne = new WorkspaceDTO(wsName, uid, [uid], [])
@@ -36,7 +36,7 @@ export default function SidebarContainer() {
   return (
     <Sidebar
       data={{
-        workspaceList: workspaces
+        workspaceList
       }}
       controller={{
         onClickDashboard: gotoDashboard,

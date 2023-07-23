@@ -3,7 +3,7 @@ import LoadingView from '../components/LoadingView.js';
 import { phuc } from './user-data.js'
 import { serverTimestamp } from 'firebase/firestore';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, getAuth, FacebookAuthProvider, getAdditionalUserInfo, signInAnonymously, signOut } from "firebase/auth";
-import { addDocument, generateKeywords } from '../firebase/service';
+import { addDocument, generateKeywords } from '../services/document.service.js';
 import { withPreAndPostExecutionBehavior as extendBehavior } from '../utils'
 
 let getAuthProvider = (function () {

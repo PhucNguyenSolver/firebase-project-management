@@ -1,5 +1,5 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
-import db from "./persistent"
+import db from "../configs/db"
 
 export class WorkspaceDTO {
   constructor(name, owner, members, columns) {

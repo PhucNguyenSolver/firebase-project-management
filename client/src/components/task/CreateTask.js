@@ -6,7 +6,7 @@ import moment from 'moment';
 import './index.scss';
 import { AppContext } from '../../context/AppProvider';
 import { AuthContext } from "../../context/AuthProvider";
-import { addDocument, editDocumentById } from '../../firebase/service';
+import { addDocument, editDocumentById } from '../../services/document.service';
 import { serverTimestamp } from "firebase/firestore";
 
 const dateFormat = 'DD/MM/YYYY';

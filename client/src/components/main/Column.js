@@ -4,7 +4,7 @@ import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Modal, Input } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Task from './Task';
-import { deleteDocumentById, editDocumentById } from "../../firebase/service";
+import { deleteDocumentById, editDocumentById } from "../../services/document.service";
 import { AppContext } from '../../context/AppProvider';
 export default function Column(props) {
   const [modalMenu, setModalMenu] = useState({
